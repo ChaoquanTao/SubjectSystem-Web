@@ -479,19 +479,53 @@
                     $("#subtable").empty()
                     $("#subtable").append(ele)
 
-                    var subject = {
-                        "index": 1,
-                        "subname": "Java从入门到放弃",
-                        "code": "007",
-                        "teacher": "tau",
-                        "capacity": 100
-                    }
-                    $("#subbody").append("<tr> " +
-                        "  <th style=\"font-weight:normal\">" + subject["index"] + "</th>" +
-                        "  <th style=\"font-weight:normal\">" + subject["subname"] + "</th>" +
-                        "<th style=\"font-weight:normal\">" + subject["code"] + "</th>" +
-                        "<th style=\"font-weight:normal\">" + subject["teacher"] + "</th>" +
-                        "<th style=\"font-weight:normal\">" + subject["capacity"] + "</th>")
+                    // 向后端请求选课数据
+                    $.ajax({
+                        //几个参数需要注意一下
+                        type: "GET", //方法类型
+                        dataType: "json", //预期服务器返回的数据类型
+                        // contentType: 'application/json;charset=utf-8',
+                        // contentType : "application/x-www-form-urlencoded",
+                        url: "/api/getAllCourses", //url
+
+
+                        // data: $("form").serialize(),
+                        success: function(result) {
+                            var i = 1;
+                            result.forEach(element => {
+                                console.log(element)
+                                $("#subbody").append("<tr> " +
+                                    "  <th style=\"font-weight:normal\">" + i + "</th>" +
+                                    "  <th style=\"font-weight:normal\">" + element["courseName"] + "</th>" +
+                                    "  <th style=\"font-weight:normal\">" + element["courseId"] + "</th>" +
+                                    "<th style=\"font-weight:normal\">" + element["courseTeacher"] + "</th>" +
+
+                                    "<th style=\"font-weight:normal\">" + element["courseCapacity"] + "</th>")
+                                i = i + 1;
+                            });
+
+
+
+
+                        },
+                        error: function() {
+                            alert("异常！");
+                        }
+                    });
+
+                    // var subject = {
+                    //     "index": 1,
+                    //     "subname": "Java从入门到放弃",
+                    //     "code": "007",
+                    //     "teacher": "tau",
+                    //     "capacity": 100
+                    // }
+                    // $("#subbody").append("<tr> " +
+                    //     "  <th style=\"font-weight:normal\">" + subject["index"] + "</th>" +
+                    //     "  <th style=\"font-weight:normal\">" + subject["subname"] + "</th>" +
+                    //     "<th style=\"font-weight:normal\">" + subject["code"] + "</th>" +
+                    //     "<th style=\"font-weight:normal\">" + subject["teacher"] + "</th>" +
+                    //     "<th style=\"font-weight:normal\">" + subject["capacity"] + "</th>")
                 }
             </script>
             <!-- Info boxes -->
