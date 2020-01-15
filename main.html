@@ -396,47 +396,10 @@
 
             <!-- Main content -->
             <section class="content" id="subtable">
-                <!-- <div class="row">
-                    <div class="col-xs-12">
-                        <div class="box">
-                            <div class="box-header">
-                                <h3 class="box-title">Hover Data Table</h3>
-                            </div> 
+            </section>
 
-                      
-                            <div class="box-body">
-                                <table id="example2" class="table  table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>序号</th>
-                                            <th>课程名</th>
-                                            <th>课程编号</th>
-                                            <th>授课教师</th>
-                                            <th>课堂容量</th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-                                    
-                                    </tbody>
-
-                                    <tfoot>
-                                        <tr>
-                                            <th>序号</th>
-                                            <th>课程名</th>
-                                            <th>课程编号</th>
-                                            <th>授课教师</th>
-                                            <th>课堂容量</th>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div> -->
-                <!-- /.row -->
+            <section class="submitsec text-center" id="submitsec">
+                <!-- <!-- <button class="btn btn-default" type="submit">Button</button> -->-->
             </section>
 
             <script>
@@ -457,6 +420,7 @@
                         "              <th>课程编号</th>" +
                         "              <th>授课教师</th>" +
                         "              <th>课堂容量</th>" +
+                        "               <th>选课</th>" +
                         "          </tr>" +
                         "     </thead>" +
                         "      <tbody id=\"subbody\">" +
@@ -468,6 +432,7 @@
                         "             <th>课程编号</th>" +
                         "              <th>授课教师</th>" +
                         "              <th>课堂容量</th>" +
+                        "               <th>选课</th>" +
                         "           </tr>" +
                         "          </tfoot>" +
                         "       </table>" +
@@ -500,7 +465,8 @@
                                     "  <th style=\"font-weight:normal\">" + element["courseId"] + "</th>" +
                                     "<th style=\"font-weight:normal\">" + element["courseTeacher"] + "</th>" +
 
-                                    "<th style=\"font-weight:normal\">" + element["courseCapacity"] + "</th>")
+                                    "<th style=\"font-weight:normal\">" + element["courseCapacity"] + "</th>" +
+                                    "<th style=\"font-weight:normal\"><input type = \"checkbox\"></th>")
                                 i = i + 1;
                             });
 
@@ -513,19 +479,10 @@
                         }
                     });
 
-                    // var subject = {
-                    //     "index": 1,
-                    //     "subname": "Java从入门到放弃",
-                    //     "code": "007",
-                    //     "teacher": "tau",
-                    //     "capacity": 100
-                    // }
-                    // $("#subbody").append("<tr> " +
-                    //     "  <th style=\"font-weight:normal\">" + subject["index"] + "</th>" +
-                    //     "  <th style=\"font-weight:normal\">" + subject["subname"] + "</th>" +
-                    //     "<th style=\"font-weight:normal\">" + subject["code"] + "</th>" +
-                    //     "<th style=\"font-weight:normal\">" + subject["teacher"] + "</th>" +
-                    //     "<th style=\"font-weight:normal\">" + subject["capacity"] + "</th>")
+                    if ($("#subbody").children()) {
+                        $("#submitsec").empty()
+                        $("#submitsec").append("<button class = \"btn btn-default text-right\" type=\"submit\">提交</button>")
+                    }
                 }
             </script>
             <!-- Info boxes -->
