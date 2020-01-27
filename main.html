@@ -398,6 +398,29 @@
             <section class="content" id="subtable">
             </section>
 
+            <section class="subject_result">
+                <!-- <div class="row">
+                    <div class="col-xs-12">
+                        <div class="box-header">
+                            <h3 class="box-title">已选课程</h3>
+                        </div>
+                        <div class="box-body">
+                            <table id="selected-subject-table" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                    <th>序号</th>
+                                    <th>课程名</th>
+                                    <th>课程编号</th>
+                                    <th>授课教师</th>
+                                    <th>课堂容量</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div> -->
+            </section>
+
             <section class="submitsec text-center" id="submitsec">
                 <!-- <!-- <button class="btn btn-default" type="submit">Button</button> -->-->
             </section>
@@ -409,7 +432,7 @@
                         "<div class=\"col-xs-12\">" +
                         "<div class=\"box\">" +
                         "<div class=\"box-header\">" +
-                        "<h3 class=\"box-title\">Hover Data Table</h3>" +
+                        "<h3 class=\"box-title\">课程信息</h3>" +
                         " </div>" +
                         " <div class=\"box-body\">" +
                         "<table id=\"example2\" class=\"table table-bordered table-hover\">" +
@@ -443,8 +466,39 @@
                         "</div>"
                     $("#subtable").empty()
                     $("#subtable").append(ele)
+                    
+                    var select_result = '  <div class="row">\
+                    <div class="col-xs-12">\
+                        <div class="box-header">\
+                            <h3 class="box-title">已选课程</h3>\
+                        </div>\
+                        <div class="box-body">\
+                            <table id="selected-subject-table" class="table table-bordered table-hover">\
+                                <thead>\
+                                    <tr>\
+                                    <th>序号</th>\
+                                    <th>课程名</th>\
+                                    <th>课程编号</th>\
+                                    <th>授课教师</th>\
+                                    <th>课堂容量</th>\
+                                </tr>\
+                                </thead>\
+                            </table>\
+                        </div>\
+                    </div>\
+                </div>'  
 
+                $(".subject_result").empty()
+                $(".subject_result").append(select_result)
                     // 向后端请求选课数据
+                    /**
+                        这里需要请求两部分数据：课程信息和选课信息，
+                        同时在显示的时候，课程信息列表中需要除去已经被选择的课程；
+                        用户每次进行的选课操作在页面上是把选课列表中的选项移除，然后添加到已选择列表中。
+                        如果这样的话，每次系统启动时服务端也需要把已经选择的课程添加到redis中，
+                        问题是redis中的数据何时进行持久化，
+                        为了简单起见，我们可以先不支持退选的功能
+                    **/
                     $.ajax({
                         //几个参数需要注意一下
                         type: "GET", //方法类型
