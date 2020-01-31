@@ -399,26 +399,7 @@
             </section>
 
             <section class="subject_result">
-                <!-- <div class="row">
-                    <div class="col-xs-12">
-                        <div class="box-header">
-                            <h3 class="box-title">已选课程</h3>
-                        </div>
-                        <div class="box-body">
-                            <table id="selected-subject-table" class="table table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                    <th>序号</th>
-                                    <th>课程名</th>
-                                    <th>课程编号</th>
-                                    <th>授课教师</th>
-                                    <th>课堂容量</th>
-                                </tr>
-                                </thead>
-                            </table>
-                        </div>
-                    </div>
-                </div> -->
+    
             </section>
 
             <section class="submitsec text-center" id="submitsec">
@@ -469,6 +450,7 @@
                     
                     var select_result = '  <div class="row">\
                     <div class="col-xs-12">\
+                    <div class="box">\
                         <div class="box-header">\
                             <h3 class="box-title">已选课程</h3>\
                         </div>\
@@ -481,9 +463,13 @@
                                     <th>课程编号</th>\
                                     <th>授课教师</th>\
                                     <th>课堂容量</th>\
+                                    <th>退选</th>\
                                 </tr>\
                                 </thead>\
+                                <tbody id="selected_body">\
+                                </tbody>\
                             </table>\
+                        </div>\
                         </div>\
                     </div>\
                 </div>'  
@@ -514,7 +500,9 @@
                         data:token,
                         success: function(result) {
                             var i = 1;
-                            result.forEach(element => {
+                            unSelectedCourses = result['unSelectedCourseList']
+                            selectedCourses = result['selectedCourseList']
+                            unSelectedCourses.forEach(element => {
                                 console.log(element)
                                 $("#subbody").append("<tr> " +
                                     "  <th style=\"font-weight:normal\">" + i + "</th>" +
@@ -523,9 +511,26 @@
                                     "<th style=\"font-weight:normal\">" + element["courseTeacher"] + "</th>" +
 
                                     "<th style=\"font-weight:normal\">" + element["courseCapacity"] + "</th>" +
-                                    "<th style=\"font-weight:normal\"><input type = \"checkbox\"></th>")
+     "<th style=\"font-weight:normal\"><button class=\"btn btn-default btn-add\" type=\"submit\" onClick=\"addClick(this)\">添加</button></th>")
                                 i = i + 1;
                             });
+
+                            var j=1
+                            selectedCourses.forEach(element => {
+                                console.log(element)
+                                $("#selected_body").append("<tr> " +
+                                    "  <th style=\"font-weight:normal\">" + j + "</th>" +
+                                    "  <th style=\"font-weight:normal\">" + element["courseName"] + "</th>" +
+                                    "  <th style=\"font-weight:normal\">" + element["courseId"] + "</th>" +
+                                    "<th style=\"font-weight:normal\">" + element["courseTeacher"] + "</th>" +
+
+                                    "<th style=\"font-weight:normal\">" + element["courseCapacity"] + "</th>" +
+                                    // "<th style=\"font-weight:normal\"><input type = \"checkbox\"></th>"+
+                                    "<th style=\"font-weight:normal\"><button class=\"btn btn-default\" type=\"submit\">移除</button></th>")
+
+                                j = j + 1;
+                            });
+                            
 
 
 
@@ -540,6 +545,22 @@
                         $("#submitsec").empty()
                         $("#submitsec").append("<button class = \"btn btn-default text-right\" type=\"submit\">提交</button>")
                     }
+                }
+            </script>
+            <script>
+                function addClick(obj){
+                    // console.log("add clicked"+idx)
+                //    console.log($("#subbody").find("tr").eq(1))
+                    // console.log($("#subbody").find("tr").eq(idx).data)
+                   var last_idx = parseInt($("#selected_body tr:last th:eq(0)").text())
+                   
+                //    $("#subbody tr:last th:eq(-1)").text()="移除"
+                   $("#selected_body").append($(obj).parent().parent())
+                   $(obj).parent().parent().find("th:eq(0)").html( "<th style=\"font-weight:normal\">" + (last_idx+1) + "</th>")
+                   $(obj).parent().parent().find("th:eq(-1)").html( "<th style=\"font-weight:normal\"><button class=\"btn btn-default\" type=\"submit\">移除</button></th>")
+                   
+                    // $(obj).parent().parent().remove()
+                    // $("#subbody").find("tr").eq(idx).remove()
                 }
             </script>
             <!-- Info boxes -->
