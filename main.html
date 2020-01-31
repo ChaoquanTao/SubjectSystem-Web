@@ -511,7 +511,8 @@
                                     "<th style=\"font-weight:normal\">" + element["courseTeacher"] + "</th>" +
 
                                     "<th style=\"font-weight:normal\">" + element["courseCapacity"] + "</th>" +
-     "<th style=\"font-weight:normal\"><button class=\"btn btn-default btn-add\" type=\"submit\" onClick=\"addClick(this)\">添加</button></th>")
+     "<th style=\"font-weight:normal\"><button class=\"btn btn-default btn-add\" type=\"submit\" onClick=\"addClick(this)\">添加</button></th>"+
+     "</tr>")
                                 i = i + 1;
                             });
 
@@ -526,7 +527,8 @@
 
                                     "<th style=\"font-weight:normal\">" + element["courseCapacity"] + "</th>" +
                                     // "<th style=\"font-weight:normal\"><input type = \"checkbox\"></th>"+
-                                    "<th style=\"font-weight:normal\"><button class=\"btn btn-default\" type=\"submit\">移除</button></th>")
+                                    "<th style=\"font-weight:normal\"><button class=\"btn btn-default\" type=\"submit\" onClick=\"delClick(this)\">移除</button></th>"+
+                                    "</tr>")
 
                                 j = j + 1;
                             });
@@ -548,19 +550,48 @@
                 }
             </script>
             <script>
+                /**
+                实现将课程从课程列表添加到选课列表
+                **/
                 function addClick(obj){
                     // console.log("add clicked"+idx)
                 //    console.log($("#subbody").find("tr").eq(1))
                     // console.log($("#subbody").find("tr").eq(idx).data)
                    var last_idx = parseInt($("#selected_body tr:last th:eq(0)").text())
-                   
+                   if(isNaN(last_idx))
+                        last_idx = 0
+                var pp = $(obj).parent().parent()
+                var row = "<th style=\"font-weight:normal\"><button class=\"btn btn-default\" type=\"submit\" onClick=\"delClick($(this).parent())\">移除</button></th>"
                 //    $("#subbody tr:last th:eq(-1)").text()="移除"
-                   $("#selected_body").append($(obj).parent().parent())
-                   $(obj).parent().parent().find("th:eq(0)").html( "<th style=\"font-weight:normal\">" + (last_idx+1) + "</th>")
-                   $(obj).parent().parent().find("th:eq(-1)").html( "<th style=\"font-weight:normal\"><button class=\"btn btn-default\" type=\"submit\">移除</button></th>")
-                   
+                // var row = $(row)
+                pp.find("th:eq(0)").html( "<th style=\"font-weight:normal\">" + (last_idx+1) + "</th>")
+                pp.find("th:last").html(row)
+                   $("#selected_body").append(pp)
+                   console.log("------")
+                   console.log($(pp).parent().html())
+                                     // $(obj).click(delClick(obj))
+                // $(obj).parent().parent().find("th:eq(0)").text( (last_idx+1) )
+                //    $(obj).parent().parent().find("th:eq(-1)").text("移除")
+                //    $(obj).parent().parent().find("th:eq(-1)").click(delClick(obj))
                     // $(obj).parent().parent().remove()
                     // $("#subbody").find("tr").eq(idx).remove()
+                }
+
+                
+
+                function delClick(obj){
+                    var last_idx = parseInt($("#subbody tr:last th:eq(0)").text())
+                    if(isNaN(last_idx))
+                        last_idx = 0
+                    console.log(last_idx)
+                    console.log($(obj).html())
+                    // console.log(this)
+                    console.log($(obj).parent().html())
+                    console.log($(obj).parent().parent().html())
+                    $("#subbody").append($(obj).parent().parent())
+                   $(obj).parent().parent().find("th:eq(0)").html( "<th style=\"font-weight:normal\">" + (last_idx+1) + "</th>")
+                   $(obj).parent().parent().find("th:eq(-1)").html("<th style=\"font-weight:normal\"><button class=\"btn btn-default btn-add\" type=\"submit\" onClick=\"addClick($(this).parent())\">添加</button></th>")
+
                 }
             </script>
             <!-- Info boxes -->
